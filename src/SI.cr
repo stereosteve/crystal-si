@@ -6,7 +6,7 @@ module SI
     -5 => "f", # femto
     -4 => "p", # pico
     -3 => "n", # nano
-    -2 => "u", # micro
+    -2 => "µ", # micro
     -1 => "m", # milli
      0 => "",
      1 => "k", # kilo
@@ -23,6 +23,14 @@ module SI
 
   PREFIXES.each do |k, v|
     EXPONENTS[v] = k
+  end
+
+  ALIASES = {
+    "u" => "µ",
+  }
+
+  ALIASES.each do |newk, origk|
+    EXPONENTS[newk] = EXPONENTS[origk]
   end
 
   PARSE_REGEX             = /^([\-0-9.]+)\s?([#{EXPONENTS.keys.join}])(.*)/
