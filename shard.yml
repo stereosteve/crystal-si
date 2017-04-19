@@ -1,0 +1,9 @@
+name: SI
+version: 0.1.0
+
+authors:
+  - Steve Perkins <stereosteve@gmail.com>
+
+crystal: 0.21.1
+
+license: MIT
