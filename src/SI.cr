@@ -25,10 +25,11 @@ module SI
     EXPONENTS[v] = k
   end
 
-  PARSE_REGEX = /^([\-0-9.]+)\s?([#{EXPONENTS.keys.join}])(.*)/
+  PARSE_REGEX             = /^([\-0-9.]+)\s?([#{EXPONENTS.keys.join}])(.*)/
+  PARSE_REGEX_NO_EXPONENT = /^([\-0-9.]+)\s?(.*)/
 
   def self.format(number, unit, separator = " ", base = 1000)
-    return "#{number} #{unit}" if number == 0
+    return "#{number}#{separator}#{unit}" if number == 0
     is_negative = number < 0
     num = number.abs
     base = base.to_f
@@ -48,6 +49,11 @@ module SI
       base = base.to_f
       scaled = num * (base ** EXPONENTS[prefix])
       return scaled, unit
+    end
+    if m = PARSE_REGEX_NO_EXPONENT.match(formatted)
+      num = m[1].to_f
+      unit = m[2]
+      return num, unit
     end
   end
 end
